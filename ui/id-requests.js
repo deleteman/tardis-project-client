@@ -1,4 +1,5 @@
 const blessed = require('node-blessed');
+const logger = require("../utils/logger")
 const config = require("config")
 
 module.exports = {
@@ -20,14 +21,29 @@ module.exports = {
 
 		input.on('submit', (data) => {
 			let command = input.getValue()
-		  	
+		  	logger.info("Game ID entered: ", command)	
 
 		 	input.clearValue()
-			handler.handle(this.UI.gamestate, command, (err) => {
+			handler.handle(this.UI.gamestate, command, (err, gstate, gameID) => {
 		  		if(err) {
-		  			this.showMessage(err)	
+		  			logger.error("There was an error in the handler: ", err)
+		  			if(err.errcode == config.get('app.errors.useralreadythere.code')) {
+			  			logger.error("User is already in the party!")
+		  				this.UI.setUpAlert(err.msg, () => {
+				  			this.UI.loadScreen('main-options', (err ) => {
+								if(err) this.UI.setUpAlert(err)	
+					  		})		
+		  				})	
+		  				return this.UI.renderScreen()
+		  			} else {
+		  				this.UI.setUpAlert(err.msg)
+		  			}
 		  		}
-		  	})
+		  		this.UI.gamestate.gameID = gameID
+				this.UI.loadScreen('main-ui', (err ) => {
+					if(err) this.UI.setUpAlert(err)	
+			  	})
+			})
 		})
 		 
 

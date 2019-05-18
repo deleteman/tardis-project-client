@@ -46,7 +46,7 @@ module.exports = {
 			
 			handler.handle(this.UI.gamestate, command, (err, resp) => {
 		  		if(err) {
-		  			this.setUpAlert(err)	
+		  			this.UI.setUpAlert(err)	
 					this.UI.renderScreen()
 				} else {
 					logger.info(resp)

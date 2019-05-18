@@ -1,5 +1,6 @@
 const blessed = require('node-blessed');
 const config = require("config")
+const logger = require("../utils/logger")
 
 module.exports = {
 	screenElements: [],
@@ -28,6 +29,7 @@ module.exports = {
 			APIKEY: apikey
 		}
 		this.screen = screen
+ 		this.screen.program.disableMouse()
 
 	},
 	loadScreen: function(sname, extras, done) {
@@ -77,7 +79,8 @@ module.exports = {
 	},
 
 
-	setUpAlert: function(txt) {
+	setUpAlert: function(txt, done) {
+		if(!done) done = function() {}
 		const box = blessed.message(
 					 {
 						"position": {
@@ -93,21 +96,20 @@ module.exports = {
 						"mouse": false,
 						"style": {
 						  "fg": "white",
-						  "bg": "blue",
+						  "bg": "red",
 						  "border": {
-						      "fg": "#f0f0f0"
+						      "fg": "#ffffff"
 						  }
 						}
 					}
 				);
 
+ 		this.screen.program.disableMouse()
+		box.display(txt, 10, done)
+
 		this.screenElements.push(box)
 		this.screen.append(box)
- 		this.screen.program.disableMouse()
- 		setTimeout(() => {
- 			box.destroy()
- 			this.screen.program.enableMouse()
- 		}, 2000)
+
 		return box
 	},
 
