@@ -1,0 +1,251 @@
+{
+	"app": {
+		"name": "CLI Client",
+		"game": {
+			"cartdrigename": "sample"
+		},
+		"logging": {
+			"outputfile": "./output.log"
+		}
+	},
+	"api": {
+		"url": "http://localhost:3000",
+		"endpoints": {
+			"games": "/games",
+			"clients": "/clients"
+		},
+		"errorCodes": {
+			"1": "I don't know how to do that"
+		},
+		"unknownResponse": "Unknown response from API"
+	},
+	"screens": {
+		"main-options": {
+			"file": "./main-options.js",
+			"elements": {
+				"username-request": {
+					"type": "input-prompt",
+					"params": {
+						"position": {
+							"top": "0%",
+							"left": "0%",
+							"width": "100%",
+							"height": "25%"
+						},
+						"content": "What's your name?\n",
+						"inputOnFocus": true,
+						"border": {
+						  "type": "line"
+						},
+						"style": {
+						  "fg": "white",
+						  "bg": "blue",
+						  "border": {
+						      "fg": "#f0f0f0"
+						  },
+						  "hover": {
+						    "bg": "green"
+						  }
+						}
+					}
+				},
+				"options": {
+					"type": "window",
+					"params": {
+						"position": {
+							"top": "25%",
+							"left": "0%",
+							"width": "100%",
+							"height": "50%"
+						},
+						"content": "Please select an option: \n1. Join an existing game.\n2. Create a new game",
+						"border": {
+						  "type": "line"
+						},
+						"style": {
+						  "fg": "white",
+						  "bg": "blue",
+						  "border": {
+						      "fg": "#f0f0f0"
+						  },
+						  "hover": {
+						    "bg": "green"
+						  }
+						}
+					}
+				},
+				"input": {
+					"type": "input",
+					"handlerPath": "../lib/main-options-handler",
+					"params": {
+						"position": {
+							"top": "75%",
+							"left": "0%",
+							"width": "100%",
+							"height": "25%"
+						},
+						"inputOnFocus": true,
+						"border": {
+						  "type": "line"
+						},
+						"style": {
+						  "fg": "white",
+						  "bg": "blue",
+						  "border": {
+						      "fg": "#f0f0f0"
+						  },
+						  "hover": {
+						    "bg": "green"
+						  }
+						}
+					}
+				}
+			}
+		},
+		"id-requests": {
+			"file": "./id-requests.js",
+			"elements": {
+				"welcomebox": {
+					"type": "window",
+					"params": {
+						"position": {
+							"top": "0%",
+							"left": "0%",
+							"width": "100%",
+							"height": "75%"
+						},
+						"content": "Welcome to Project Tardis, please enter the Game ID in the box below to start your retro experience",
+						"border": {
+						  "type": "line"
+						},
+						"style": {
+						  "fg": "white",
+						  "bg": "blue",
+						  "border": {
+						      "fg": "#f0f0f0"
+						  },
+						  "hover": {
+						    "bg": "green"
+						  }
+						}
+					}
+				},
+				"gameidbox": {
+					"type": "input",
+					"handlerPath": "../lib/idhandler",
+					"params": {
+						"position": {
+							"top": "75%",
+							"left": "0%",
+							"width": "100%",
+							"height": "25%"
+						},
+						"inputOnFocus": true,
+						"border": {
+						  "type": "line"
+						},
+						"style": {
+						  "fg": "white",
+						  "bg": "blue",
+						  "border": {
+						      "fg": "#f0f0f0"
+						  },
+						  "hover": {
+						    "bg": "green"
+						  }
+						}
+					}	
+				}
+			}
+		},
+		"main-ui": {
+			"file": "./main-ui.js",
+			"elements": {
+				"gamebox": {
+					"autoscrollspeed": 10,
+					"type": "window",
+					"params": {
+						"position": {
+							 "top": "top",
+							 "left": "left",
+							 "width": "50%",
+							 "height": "75%"
+						},
+						 "content": "Your adventure begins here!",
+						 "tags": true,
+						 "border": {
+						 	"type": "line"
+						 },
+						 "scrollable": true,
+						"scrollbar": {
+							"bg": "blue"
+						 },
+						 "keys": true,
+						 "style": {
+						   "fg": "white",
+						   "bg": "magenta",
+						   "border": {
+						     "fg": "#f0f0f0"
+							 },
+						   "hover": {
+						     "bg": "green"
+						   }
+						 }
+					}
+				},
+				"chatbox": {
+					"type": "window",
+					"params": {
+						  "position": {
+						  		"top": "top",
+							  "left": "50%",
+							  "width": "50%",
+							  "height": "75%"
+							},
+						  "content": "chat box",
+						  "tags": true,
+						  "border": {
+						    "type": "line"
+						  },
+						  "style": {
+						    "fg": "white",
+						    "bg": "blue",
+						    "border": {
+						      "fg": "#f0f0f0"
+						    },
+						    "hover": {
+						      "bg": "green"
+						    }
+						  }				
+						}
+				},
+				"commandbox": {
+					"type": "input",
+					"handlerPath": "../lib/commandHandler",
+					"params": {
+						"position": {
+							"top": "75%",
+							"left": "0%",
+							"width": "100%",
+							"height": "25%"
+						},
+						"inputOnFocus": true,
+						"border": {
+						  "type": "line"
+						},
+						"style": {
+						  "fg": "white",
+						  "bg": "blue",
+						  "border": {
+						      "fg": "#f0f0f0"
+						  },
+						  "hover": {
+						    "bg": "green"
+						  }
+						}
+					}	
+				}	
+			}
+		}
+	}
+}
