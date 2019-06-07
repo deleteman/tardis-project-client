@@ -10,9 +10,11 @@ module.exports = {
 		this.UI = UI
 		this.id = "main-ui"
 		this.setInput()
+		this.setUpChatBox()
 	},
 
 	parseResponse(respObj) {
+		if(!respObj) return []
 		if(respObj.message) {
 			return ["Response: " + respObj.message]
 		}
@@ -27,6 +29,27 @@ module.exports = {
 					"------------------------------------"]
 		}
 		return []
+	},
+
+	setUpChatBox: function() {
+		let handler = require(this.elements["chatbox"].meta.handlerPath)
+		handler.handle(this.UI.gamestate, (err, evt) => {
+			if(err) {
+				this.UI.setUpAlert(err)	
+				return this.UI.renderScreen()
+			}
+
+			if(evt.event == config.get('chatserver.commands.JOINROOM')) {
+				this.elements["chatbox"].obj.insertBottom(["::You've joined the party chat room::"])
+				this.elements["chatbox"].obj.scroll((config.get("screens.main-ui.elements.gamebox.autoscrollspeed") ) + 1)
+			}
+			if(evt.event == config.get('chatserver.commands.SENDMSG')) {
+				this.elements["chatbox"].obj.insertBottom([evt.msg.username + ' said :> ' + evt.msg.message])
+				this.elements["chatbox"].obj.scroll((config.get("screens.main-ui.elements.gamebox.autoscrollspeed") ) + 1)
+			}
+			this.UI.renderScreen()
+		})
+
 	},
 
 	setInput: function() {
@@ -53,13 +76,24 @@ module.exports = {
 					let respMsgs = this.parseResponse(resp)
 					let lines = []
 
-					lines.push('> ' + command) //render the command sent
-					lines = lines.concat(respMsgs) //render the response received
+					logger.info("Command response code")
+					logger.info(command)
+					if(command.indexOf("chat") == 0) {
+						logger.info("it's a chat commadn!")
+						lines.push('You :: > ' + command.split(" ").splice(1).join(" ")) //render the command sent
+						this.elements["chatbox"].obj.insertBottom(lines)
+						this.elements["chatbox"].obj.scroll((config.get("screens.main-ui.elements.gamebox.autoscrollspeed") * respMsgs.length )+ 1)
 
-					this.elements["gamebox"].obj.insertBottom(lines)
+
+					} else {
+						lines.push('> ' + command) //render the command sent
+						lines = lines.concat(respMsgs) //render the response received
+						this.elements["gamebox"].obj.insertBottom(lines)
+						this.elements["gamebox"].obj.scroll((config.get("screens.main-ui.elements.gamebox.autoscrollspeed") * respMsgs.length )+ 1)
+
+					}
 					//this.UI.renderScreen()
 
-					this.elements["gamebox"].obj.scroll((config.get("screens.main-ui.elements.gamebox.autoscrollspeed") * respMsgs.length )+ 1)
 					this.UI.renderScreen()
 				}
 		  	})

@@ -12,13 +12,13 @@ module.exports = {
 		this.setInput()
 	},
 
-	moveToIDRequest: function() {
+	moveToIDRequest: function(handler) {
 		return this.UI.loadScreen('id-requests', (err, ) => {
 			
 		})
 	},
 
-	createNewGame: function() {
+	createNewGame: function(handler) {
 
 		handler.createNewGame(this.UI.gamestate.APIKEY, (err, gameData) => {
   			this.UI.gamestate.gameID = gameData._id
@@ -69,7 +69,7 @@ module.exports = {
 			  		this.UI.setUpAlert("Invalid option: " + command)
 			  		return this.UI.renderScreen()
 			  	}
-			  	return validOptions[+command]()
+			  	return validOptions[+command](handler)
 			})
 
 

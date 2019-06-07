@@ -1,4 +1,11 @@
 {
+	"chatserver": {
+		"url": "ws://localhost:8000/",
+		"commands": {
+			"JOINROOM": "join room",
+			"SENDMSG": "new message"
+		}
+	},
 	"app": {
 		"name": "CLI Client",
 		"game": {
@@ -201,7 +208,9 @@
 					}
 				},
 				"chatbox": {
+					"autoscrollspeed": 10,
 					"type": "window",
+					"handlerPath": "../lib/chatBoxHandler",
 					"params": {
 						  "position": {
 						  		"top": "top",
@@ -209,11 +218,15 @@
 							  "width": "50%",
 							  "height": "75%"
 							},
-						  "content": "chat box",
+						  "content": ".-= Party Chat =-.",
 						  "tags": true,
 						  "border": {
 						    "type": "line"
-						  },
+							},
+						"scrollable": true,
+						"scrollbar": {
+							"bg": "blue"
+						 },
 						  "style": {
 						    "fg": "white",
 						    "bg": "blue",

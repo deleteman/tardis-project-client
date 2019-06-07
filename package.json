@@ -14,6 +14,7 @@
     "config": "^3.0.1",
     "node-blessed": "^0.3.2",
     "request": "^2.88.0",
+    "socket.io-client": "^2.2.0",
     "uuid": "^3.3.2",
     "winston": "^3.2.1"
   }
